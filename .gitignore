@@ -1,0 +1,10 @@
+.bloop
+.metals
+.idea
+.ivy2
+.ensime
+project/project
+project/target
+target
+project/.bloop
+*.log
