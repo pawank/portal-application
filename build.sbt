@@ -37,6 +37,10 @@ lazy val root = (project in file("."))
       "com.github.finagle" %% "finchx-circe" % finchVersion,
       "io.circe" %% "circe-generic" % circeVersion,
       "com.github.finagle" %% "finchx-oauth2" % "0.29.0-SNAPSHOT",
+      "com.outr" %% "scarango-driver" % "2.0.0",
+      "com.orientechnologies" % "orientdb-client" % "3.1.0-M2",
+      "com.michaelpollmeier" %% "gremlin-scala" % "3.4.1.6",
+      "com.orientechnologies" % "orientdb-gremlin" % "3.1.0-M2",
       //"com.github.finagle" %% "finagle-oauth2" % "19.4.0",
       "org.scalatest" %% "scalatest" % scalatestVersion % "test"
     )
