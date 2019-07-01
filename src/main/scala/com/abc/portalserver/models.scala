@@ -5,7 +5,10 @@ import java.util.UUID
 import io.scalaland.chimney.dsl._
 import java.time.OffsetDateTime
 
+case class ID(value: String) extends AnyVal
+
 case class Employee(
+    id: Option[ID],
     name: String,
     email: String,
     mobile: Option[String],
@@ -15,6 +18,7 @@ case class Employee(
 object Employee {
   val superadmin =
     Employee(
+      id = None,
       name = "Super Admin",
       email = "superadmin@gmail.com",
       mobile = None,

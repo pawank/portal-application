@@ -26,12 +26,14 @@ object DSL {
     import scala.collection.JavaConversions._
     import scala.collection.JavaConverters._
 
-    implicit val graph =
+    val graphAsJava =
       new OrientGraphFactory(
         "remote:localhost/portalapp",
         "root",
         "[guessme321]"
-      ).getNoTx().asScala()
+      ).getNoTx()
+
+    implicit val graph = graphAsJava.asScala()
 
     implicit val marshaller = new Marshallable[DoneByAt] {
       import java.time.format.DateTimeFormatter
@@ -78,11 +80,22 @@ object DSL {
         )
     }
 
+    val keyEmployeeIndex = Key[String]("email")
+    val config = new BaseConfiguration()
+    config.setProperty("type", "UNIQUE")
+    config.setProperty("keytype", OType.STRING)
+    graphAsJava.createVertexIndex(
+      keyEmployeeIndex.name,
+      "Employee",
+      config
+    )
     //val candidate = graph + Candidate.samples.head
     //candidate.toCC[Candidate]
 
     val sa: Vertex = graph + Employee.superadmin
-    val e1 = sa.toCC[Employee]
+    val e1 = sa
+      .toCC[Employee]
+      .copy(id = Some(ID(sa.id.asInstanceOf[ORecordId].toString())))
     println(e1)
 
     val e2: Vertex = graph + Employee.superadmin
