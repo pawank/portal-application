@@ -3,6 +3,7 @@ package com.abc.portalserver.dsl
 import com.abc.portalserver._
 import gremlin.scala._
 import java.time.OffsetDateTime
+import com.orientechnologies.orient.core.id.ORecordId
 
 object DSL {
   def testing = {
@@ -12,6 +13,14 @@ object DSL {
     import com.orientechnologies.orient.core.db.ODatabaseRecordThreadLocal
     import gremlin.scala._
     import java.util.{ArrayList => JArrayList}
+    import java.util.{
+      Comparator,
+      List => JList,
+      Map => JMap,
+      Collection => JCollection,
+      Iterator => JIterator,
+      Set => JSet
+    }
     import org.apache.commons.configuration.BaseConfiguration
     import org.apache.tinkerpop.gremlin.orientdb._
     import scala.collection.JavaConversions._
@@ -108,6 +117,7 @@ object DSL {
     val e = sa --- ("At", marshaller.fromCC(done).properties.toMap) --> e2
     //val e = sa --- ("At", Name -> "b") --> e2
     println(e)
+    println(e.id().asInstanceOf[ORecordId])
     //sa.addEdge("ByAt", w2, DoneByAt.samples.head)
     //graph + DoneByAt.samples.head.copy(updatedOn = Some(OffsetDateTime.now()))
 

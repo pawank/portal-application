@@ -5,14 +5,20 @@ import java.util.UUID
 import io.scalaland.chimney.dsl._
 import java.time.OffsetDateTime
 
-case class Employee(name: String, email: String, mobile: Option[String])
+case class Employee(
+    name: String,
+    email: String,
+    mobile: Option[String],
+    skills: List[String]
+)
 
 object Employee {
   val superadmin =
     Employee(
       name = "Super Admin",
       email = "superadmin@gmail.com",
-      mobile = None
+      mobile = None,
+      skills = List("Scala", "Python")
     )
 }
 
