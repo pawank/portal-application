@@ -41,6 +41,7 @@ lazy val root = (project in file("."))
       "com.orientechnologies" % "orientdb-client" % "3.1.0-M2",
       "com.michaelpollmeier" %% "gremlin-scala" % "3.4.1.6",
       "com.orientechnologies" % "orientdb-gremlin" % "3.1.0-M2",
+      "io.scalaland" %% "chimney" % "0.3.2",
       //"com.github.finagle" %% "finagle-oauth2" % "19.4.0",
       "org.scalatest" %% "scalatest" % scalatestVersion % "test"
     )
