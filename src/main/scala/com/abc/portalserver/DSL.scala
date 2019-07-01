@@ -17,18 +17,12 @@ object DSL {
     import scala.collection.JavaConversions._
     import scala.collection.JavaConverters._
 
-    val graph =
+    implicit val graph =
       new OrientGraphFactory(
         "remote:localhost/portalapp",
         "root",
         "[guessme321]"
       ).getNoTx().asScala()
-
-    //val candidate = graph + Candidate.samples.head
-    //candidate.toCC[Candidate]
-
-    //val sa = graph + Employee.superadmin
-    //sa.toCC[Employee]
 
     implicit val marshaller = new Marshallable[DoneByAt] {
       import java.time.format.DateTimeFormatter
@@ -75,9 +69,47 @@ object DSL {
         )
     }
 
-    val v = graph + DoneByAt.samples.head
-    v.toCC[DoneByAt](marshaller)
-    graph + DoneByAt.samples.head.copy(updatedOn = Some(OffsetDateTime.now()))
+    //val candidate = graph + Candidate.samples.head
+    //candidate.toCC[Candidate]
+
+    val sa: Vertex = graph + Employee.superadmin
+    val e1 = sa.toCC[Employee]
+    println(e1)
+
+    val e2: Vertex = graph + Employee.superadmin
+      .copy(name = "Pawan", email = "pawan@gmail.com")
+    println(e2)
+
+    val done = DoneByAt.samples.head
+    /*
+    val e = sa.addEdge(
+      "At",
+      e2,
+      done.getClass.getDeclaredFields
+        .map(_.getName)
+        .zip(done.productIterator.to)
+        .toMap
+    )
+     */
+    val Name = Key[String]("name")
+    //https://medium.com/rahasak/scala-case-class-to-map-32c8ec6de28a
+    //http://blog.echo.sh/2013/11/04/exploring-scala-macros-map-to-case-class-conversion.html
+    val doneMap = done.getClass.getDeclaredFields
+      .map(_.getName)
+      .zip(done.productIterator.to)
+      .toMap
+    println(doneMap)
+    val doneMapWithoutNone =
+      for ((k, Some(v)) <- done.getClass.getDeclaredFields
+             .map(_.getName)
+             .zip(done.productIterator.to)
+             .toMap) yield k -> v.asInstanceOf[String]
+    println(doneMapWithoutNone)
+    val e = sa --- ("At", marshaller.fromCC(done).properties.toMap) --> e2
+    //val e = sa --- ("At", Name -> "b") --> e2
+    println(e)
+    //sa.addEdge("ByAt", w2, DoneByAt.samples.head)
+    //graph + DoneByAt.samples.head.copy(updatedOn = Some(OffsetDateTime.now()))
 
   }
 }
