@@ -4,6 +4,6 @@
 OrientDB 
 
 ## Changes
-### Orientdb connection using tinkerpop/gremlin
-### Index creation
-### Vertex and its edge connection with properties directly from case classes
+- Orientdb connection using tinkerpop/gremlin. 
+- Index creation. 
+- Vertex and its edge connection with properties directly from case classes. 
