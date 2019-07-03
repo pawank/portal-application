@@ -7,13 +7,19 @@ import java.time.OffsetDateTime
 
 case class ID(value: String) extends AnyVal
 
+sealed trait GraphID {
+  def id: Option[ID]
+  def label: String
+}
+
 case class Employee(
     id: Option[ID],
+    label: String = "Employee",
     name: String,
     email: String,
     mobile: Option[String],
     skills: List[String]
-)
+) extends GraphID
 
 object Employee {
   val superadmin =
@@ -83,6 +89,8 @@ case class Country(
 )
 
 case class Candidate(
+    id: Option[ID],
+    label: String = "Candidate",
     name: String,
     email: String,
     mobile: String,
@@ -90,11 +98,12 @@ case class Candidate(
     location: String,
     city: String,
     country: String
-)
+) extends GraphID
 
 object Candidate {
   val samples = List(
     Candidate(
+      id = None,
       name = "P K",
       email = "pk@pk.com",
       mobile = "98908900922",
@@ -107,6 +116,8 @@ object Candidate {
 }
 
 case class Company(
+    id: Option[ID],
+    label: String = "Company",
     name: String,
     industry: String,
     noOfEmployees: Int,
@@ -114,7 +125,7 @@ case class Company(
     location: String,
     city: String,
     country: String
-)
+) extends GraphID
 
 case class Resume(title: String, cvType: String)
 
@@ -127,9 +138,11 @@ case class JD(
 )
 
 case class Job(
+    id: Option[ID],
+    label: String = "Job",
     title: String,
     applyLink: String,
     description: String,
     skills: List[String],
     goodToHave: List[String]
-)
+) extends GraphID

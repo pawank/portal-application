@@ -163,7 +163,8 @@ object Main extends IOApp with Config with Filters {
       val Email = Key[String]("email")
       val Mobile = Key[String]("mobile")
       //val pawan = graph + (Candidate, Name -> "PK", Email -> "pawan@gmail.com", Mobile -> "98989080")
-      com.abc.portalserver.dsl.DSL.testing
+      //com.abc.portalserver.dsl.DSL.testing
+      com.abc.portalserver.dsl.EmployeeSDL.testing
       Ok("DONE")
   }
 
